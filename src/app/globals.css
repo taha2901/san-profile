@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand — sampled from the SAN logo */
+  --color-brand-50: #eef4fb;
+  --color-brand-100: #d6e4f5;
+  --color-brand-200: #adc8eb;
+  --color-brand-300: #7ea7dc;
+  --color-brand-400: #4f84c9;
+  --color-brand-500: #295da9;
+  --color-brand-600: #224f91;
+  --color-brand-700: #1c4076;
+  --color-brand-800: #16325c;
+  --color-brand-900: #0f2343;
+
+  --color-steel-50: #f5f6f7;
+  --color-steel-100: #e9ebed;
+  --color-steel-200: #d3d6da;
+  --color-steel-300: #aeb3b9;
+  --color-steel-400: #858b93;
+  --color-steel-500: #636970;
+  --color-steel-600: #45494c;
+  --color-steel-700: #363a3d;
+  --color-steel-800: #25282b;
+  --color-steel-900: #16181a;
+
+  --color-ink: #0a1424;
+  --color-sand: #d9b77e;
+
+  /* Semantic tokens — flipped in dark mode below */
+  --color-surface: #ffffff;
+  --color-fg: #0a1424;
+  --color-link: #224f91;
+  --color-link-hover: #1c4076;
+  --color-accent: #295da9;
+
+  --font-sans: var(--font-arabic), var(--font-latin), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-kenburns: kenburns 22s ease-out both;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Dark mode: re-point the tokens instead of sprinkling dark: classes everywhere.
+ * Steel (greys) is inverted, brand tints become deep blues, surfaces go navy.
+ * Sections that are already dark (hero, fleet, footer — bg-ink) stay as they are.
+ */
+.dark {
+  color-scheme: dark;
+  --color-surface: #0d1522;
+  --color-fg: #f1f4f8;
+  --color-link: #7ea7dc;
+  --color-link-hover: #adc8eb;
+  --color-accent: #6b9be0;
+  --color-ink: #060b14;
+
+  --color-brand-50: #13233c;
+  --color-brand-100: #1a3152;
+
+  --color-steel-50: #111b2a;
+  --color-steel-100: #1c2738;
+  --color-steel-200: #2a3648;
+  --color-steel-300: #3e4b5e;
+  --color-steel-400: #6c7889;
+  --color-steel-500: #98a3b3;
+  --color-steel-600: #b5bec9;
+  --color-steel-700: #cfd5dd;
+  --color-steel-800: #e3e7ec;
+  --color-steel-900: #f2f4f7;
+}
+
+/* Smooth colour crossfade only while the theme is being switched */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, fill 0.4s ease !important;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes kenburns {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-surface text-steel-800 antialiased;
+  font-feature-settings: "kern";
+}
+
+html[lang="en"] body {
+  --font-sans: var(--font-latin), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  @apply bg-brand-500 text-white;
+}
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Faint engineering grid used on dark sections */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility bg-grid-dark {
+  background-image:
+    linear-gradient(to right, rgb(10 20 36 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(10 20 36 / 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .animate-kenburns { animation: none; }
+}
