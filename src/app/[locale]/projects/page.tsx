@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/motion";
+import { PartnerProjects } from "@/components/PartnerProjects";
 import { ProjectsExplorer } from "@/components/ProjectsExplorer";
 import { CtaBand, PageHero } from "@/components/sections";
 import { projects } from "@/data/projects";
@@ -50,6 +51,8 @@ export default async function ProjectsPage({ params }: LocaleParams) {
           <ProjectsExplorer projects={projects} locale={locale} />
         </Reveal>
       </section>
+
+      <PartnerProjects locale={locale} />
 
       <CtaBand locale={locale} />
     </>

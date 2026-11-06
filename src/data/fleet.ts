@@ -18,8 +18,7 @@ export const fleetExtras: L[] = [
   { ar: "فرادات إسفلت", en: "Asphalt Pavers" },
   { ar: "كسارات", en: "Crushers" },
   { ar: "لوبد لنقل المعدات", en: "Lowbed Trailers" },
-  { ar: "حافلات نقل العمالة", en: "Crew Buses" },
-  { ar: "كسارات هيدروليكية", en: "Hydraulic Breakers" },
+  { ar: "باصات", en: "Buses" },
 ];
 
 export const fleetTotal = fleet.reduce((sum, f) => sum + (f.count ?? 0), 0);

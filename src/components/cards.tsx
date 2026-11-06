@@ -17,7 +17,7 @@ export function ProjectCard({ project, locale, large = false }: { project: Proje
       }`}
     >
       <Image
-        src={project.cover!}
+        src={project.image}
         alt={tr(project.title, locale)}
         fill
         sizes="(min-width: 1024px) 50vw, 100vw"
@@ -27,6 +27,11 @@ export function ProjectCard({ project, locale, large = false }: { project: Proje
       <div className="absolute start-5 top-5 flex flex-wrap gap-2">
         <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur-md">{tr(categories[project.category], locale)}</span>
       </div>
+      {project.illustrative && (
+        <span className="absolute end-5 top-5 rounded-full bg-ink/50 px-2.5 py-1 text-[11px] text-white/70 backdrop-blur-md">
+          {locale === "ar" ? "صورة تعبيرية" : "Illustrative"}
+        </span>
+      )}
       <div className="p-6 sm:p-8">
         {client && <div className="text-sm font-semibold text-brand-300">{tr(client.name, locale)}</div>}
         <h3 className={`mt-2 font-bold text-balance ${large ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"}`}>{tr(project.title, locale)}</h3>
@@ -86,14 +91,21 @@ export function ServiceCard({ service, locale, index }: { service: Service; loca
 function initials(client: Client, locale: Locale) {
   const name = tr(client.name, locale);
   if (locale === "en") return name.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).slice(0, 3).map((w) => w[0]).join("");
-  return name.replace(/^(شركة|وزارة|هيئة|أمانة|الهيئة)\s+/, "").slice(0, 2);
+  const skip = new Set(["شركة", "وزارة", "هيئة", "الهيئة", "أمانة", "تطوير", "محافظة", "منطقة"]);
+  const words = name.split(/\s+/).filter((w) => !skip.has(w));
+  return words
+    .slice(0, 2)
+    .map((w) => w.replace(/^ال(?=..)/, "")[0])
+    .join(" ");
 }
 
 export function ClientCard({ client, locale, meta }: { client: Client; locale: Locale; meta?: string }) {
   return (
     <div className="group flex h-full items-center gap-4 rounded-2xl border border-steel-100 bg-surface p-5 transition hover:border-brand-200 hover:shadow-lg">
       {client.logo ? (
-        <Image src={client.logo} alt="" width={56} height={56} className="size-14 object-contain" />
+        <span className="inline-flex h-14 w-20 shrink-0 items-center justify-center rounded-xl bg-white p-1.5 ring-1 ring-steel-100">
+          <Image src={client.logo} alt="" width={160} height={80} className="max-h-full w-auto object-contain" />
+        </span>
       ) : (
         <span className="inline-flex size-14 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-lg font-bold text-link transition group-hover:bg-brand-500 group-hover:text-white">
           {initials(client, locale)}

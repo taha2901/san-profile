@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "clients",
     "careers",
     "contact",
+    "gallery",
     ...services.map((s) => `services/${s.slug}`),
     ...projects.map((p) => `projects/${p.slug}`),
   ];

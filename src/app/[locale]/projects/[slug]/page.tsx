@@ -1,4 +1,5 @@
 import { Building2, Calendar, Layers, MapPin, Timer } from "lucide-react";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ProjectCard } from "@/components/cards";
 import { Gallery } from "@/components/Gallery";
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: SlugParams) {
     path: `projects/${project.slug}`,
     title: tr(project.title, locale),
     description: tr(project.summary, locale),
-    image: project.cover,
+    image: project.image,
   });
 }
 
@@ -36,13 +37,14 @@ export default async function ProjectPage({ params }: SlugParams) {
   if (!project) notFound();
 
   const client = getClient(project.client);
-  const images = [project.cover!, ...(project.gallery ?? [])].map((src) => ({ src, alt: tr(project.title, locale) }));
+  const images = (project.photos ?? []).map((src) => ({ src, alt: tr(project.title, locale) }));
+  const clientValue = client ? [tr(client.name, locale), project.clientUnit && tr(project.clientUnit, locale)].filter(Boolean).join(" – ") : "";
   const related = projects
     .filter((p) => p.slug !== project.slug && (p.client === project.client || p.category === project.category))
     .slice(0, 3);
 
   const facts = [
-    client && { icon: Building2, label: tr(ui.client, locale), value: tr(client.name, locale) },
+    client && { icon: Building2, label: tr(ui.client, locale), value: clientValue },
     { icon: MapPin, label: tr(ui.location, locale), value: tr(project.location, locale) },
     { icon: Calendar, label: tr(ui.startDate, locale), value: project.start },
     project.duration && { icon: Timer, label: tr(ui.duration, locale), value: tr(project.duration, locale) },
@@ -53,11 +55,23 @@ export default async function ProjectPage({ params }: SlugParams) {
     <>
       <PageHero
         locale={locale}
-        image={project.cover!}
+        image={project.image}
         title={tr(project.title, locale)}
         crumbs={[{ label: tr({ ar: "مشاريعنا", en: "Projects" }, locale), href: href(locale, "projects") }, { label: tr(project.title, locale) }]}
       >
-        {client && <p className="mt-5 text-lg font-semibold text-brand-300">{tr(client.name, locale)}</p>}
+        {client && (
+          <div className="mt-6 flex items-center gap-4">
+            {client.logo && (
+              <span className="inline-flex h-14 w-20 shrink-0 items-center justify-center rounded-xl bg-white p-1.5">
+                <Image src={client.logo} alt="" width={160} height={80} className="max-h-full w-auto object-contain" />
+              </span>
+            )}
+            <div>
+              <p className="text-lg font-semibold text-brand-300">{tr(client.name, locale)}</p>
+              {project.clientUnit && <p className="text-sm text-white/60">{tr(project.clientUnit, locale)}</p>}
+            </div>
+          </div>
+        )}
       </PageHero>
 
       <section className="container-x relative z-10 -mt-12">
@@ -87,15 +101,29 @@ export default async function ProjectPage({ params }: SlugParams) {
           </div>
         </Reveal>
         <Reveal delay={0.1} className="lg:col-span-7">
-          <Gallery
-            images={images}
-            className={
-              images.length === 1
-                ? "grid"
-                : "grid grid-cols-2 gap-4 [&>*:first-child]:col-span-2 [&>*:last-child:nth-child(even)]:col-span-2"
-            }
-            aspect="aspect-[16/10]"
-          />
+          {images.length > 0 ? (
+            <>
+              <h2 className="mb-5 text-2xl font-bold text-fg">{tr(ui.gallery, locale)}</h2>
+              <Gallery
+                images={images}
+                className={
+                  images.length === 1
+                    ? "grid"
+                    : "grid grid-cols-2 gap-4 [&>*:first-child]:col-span-2 [&>*:last-child:nth-child(even)]:col-span-2"
+                }
+                aspect="aspect-[16/10]"
+              />
+            </>
+          ) : (
+            <figure>
+              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-steel-100">
+                <Image src={project.image} alt="" fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" />
+              </div>
+              <figcaption className="mt-3 text-sm text-steel-500">
+                {locale === "ar" ? "صورة تعبيرية من أعمال الشركة." : "Illustrative photo from the company's work."}
+              </figcaption>
+            </figure>
+          )}
         </Reveal>
       </section>
 

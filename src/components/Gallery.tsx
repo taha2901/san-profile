@@ -5,7 +5,8 @@ import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
-export type GalleryImage = { src: string; alt: string; caption?: string };
+/** caption = overlay on the tile; title/lines = card text rendered below the tile. */
+export type GalleryImage = { src: string; alt: string; caption?: string; title?: string; subtitle?: string; lines?: string[] };
 
 export function Gallery({
   images,
@@ -45,12 +46,13 @@ export function Gallery({
   return (
     <>
       <div className={className}>
-        {images.map((img, i) => (
+        {images.map((img, i) => {
+          const tile = (
           <button
             key={img.src}
             type="button"
             onClick={() => setIndex(i)}
-            className={`group relative overflow-hidden rounded-2xl ${contain ? "bg-steel-50" : "bg-steel-100"} ${aspect}`}
+            className={`group relative w-full overflow-hidden rounded-2xl ${contain ? "bg-steel-50" : "bg-steel-100"} ${aspect}`}
           >
             <Image
               src={img.src}
@@ -68,7 +70,25 @@ export function Gallery({
               </span>
             )}
           </button>
-        ))}
+          );
+          if (!img.title) return tile;
+          return (
+            <div key={img.src} className="flex flex-col rounded-3xl border border-steel-100 bg-surface p-3">
+              {tile}
+              <div className="px-2 pt-4 pb-2">
+                <h3 className="font-bold text-fg">{img.title}</h3>
+                {img.subtitle && <p className="mt-1 text-sm text-accent">{img.subtitle}</p>}
+                {img.lines && img.lines.length > 0 && (
+                  <ul className="mt-3 space-y-1 text-sm text-steel-500">
+                    {img.lines.map((l) => (
+                      <li key={l}>{l}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <AnimatePresence>

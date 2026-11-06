@@ -57,6 +57,11 @@ export function Footer({ locale }: { locale: Locale }) {
               </li>
             ))}
             <li>
+              <Link href={href(locale, "gallery")} className="transition hover:text-white">
+                {tr({ ar: "معرض الصور", en: "Photo Gallery" }, locale)}
+              </Link>
+            </li>
+            <li>
               <Link href={href(locale, "contact")} className="transition hover:text-white">
                 {tr(ui.contactUs, locale)}
               </Link>

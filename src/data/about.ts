@@ -56,31 +56,31 @@ export const about = {
       },
     },
   ] satisfies { title: L; text: L }[],
-  departments: [
-    { ar: "إدارة المشاريع PMO", en: "Project Management Office" },
-    { ar: "الإدارة الفنية والهندسية", en: "Technical & Engineering" },
-    { ar: "إدارة الإنتاج", en: "Production" },
-    { ar: "إدارة المعدات والآليات", en: "Equipment & Fleet" },
-    { ar: "التخطيط والتطوير وضبط الجودة", en: "Planning, Development & QA/QC" },
-    { ar: "إدارة المخاطر", en: "Risk Management" },
-    { ar: "المشتريات والعقود", en: "Procurement & Contracts" },
-    { ar: "الإدارة المالية", en: "Finance" },
-    { ar: "الموارد البشرية", en: "Human Resources" },
-    { ar: "الشؤون القانونية", en: "Legal Affairs" },
-    { ar: "المراجعة الداخلية", en: "Internal Audit" },
-    { ar: "تقنية المعلومات", en: "IT Systems" },
-  ] satisfies L[],
+  // The administrative structure lives in ./orgChart.ts
 };
 
-export type Partner = { name: string; activity: L };
+export type Partner = { name: L; activity: L };
 
+/** Alliance table, company profile PDF p.23 — names as printed there. */
 export const partners: Partner[] = [
-  { name: "CROCUS Group", activity: { ar: "الإنشاءات (ملاعب، فنادق) والتطوير العقاري", en: "Construction (stadiums, hotels) and real-estate development" } },
-  { name: "CSE", activity: { ar: "الطرق والبنية التحتية ومحطات وشبكات المياه", en: "Roads, infrastructure, water stations and networks" } },
-  { name: "ENMAS International FZC", activity: { ar: "الطاقة والنفط والغاز والبتروكيماويات ومعالجة المياه", en: "Energy, oil & gas, petrochemicals and water treatment" } },
   {
-    name: "Tariq Mukhtar & Partners",
-    activity: { ar: "الخدمات البيئية والتوريدات العمومية", en: "Environmental services and general supplies" },
+    name: { ar: "CROCUS Group", en: "CROCUS Group" },
+    activity: { ar: "الإنشاءات (ملاعب، فنادق، أخرى) والتطوير العقاري", en: "Construction (stadiums, hotels, other) and real-estate development" },
   },
-  { name: "Al-Radwan Office", activity: { ar: "الأشغال العمومية والبناء", en: "Public works and construction" } },
+  { name: { ar: "CSE", en: "CSE" }, activity: { ar: "الطرق والبنية التحتية / إنشاء محطات وشبكات المياه", en: "Roads & infrastructure / water stations and networks" } },
+  {
+    name: { ar: "ENMAS INTERNATIONAL FZC", en: "ENMAS INTERNATIONAL FZC" },
+    activity: { ar: "صناعات الطاقة / النفط والغاز / البتروكيماويات / معالجة المياه", en: "Energy / oil & gas / petrochemicals / water treatment" },
+  },
+  {
+    name: {
+      ar: "شركة طارق مختار وشركاه الهندسية للخدمات البيئية والتوريدات العمومية",
+      en: "Tariq Mukhtar & Partners Engineering Co. for Environmental Services & General Supplies",
+    },
+    activity: { ar: "الخدمات البيئية والتوريدات", en: "Environmental services and supplies" },
+  },
+  {
+    name: { ar: "مكتب الرضوان للأشغال العمومية والبناء", en: "Al-Radwan Office for Public Works & Construction" },
+    activity: { ar: "الإنشاءات العامة", en: "General construction" },
+  },
 ];

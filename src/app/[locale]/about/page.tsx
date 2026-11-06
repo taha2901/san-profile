@@ -1,11 +1,12 @@
 import { CheckCircle2, Eye, Gem, Handshake, Lightbulb, Medal, ShieldCheck, Target, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import { Counter, Reveal, Stagger, StaggerItem } from "@/components/motion";
-import { CtaBand, Eyebrow, PageHero, SectionHeading } from "@/components/sections";
+import { OrgChart } from "@/components/OrgChart";
+import { CtaBand, LinkArrow, PageHero, SectionHeading } from "@/components/sections";
 import { about, partners } from "@/data/about";
 import { stats } from "@/data/company";
 import { ui } from "@/data/ui";
-import { tr } from "@/lib/i18n";
+import { href, tr } from "@/lib/i18n";
 import { resolveLocale, type LocaleParams } from "@/lib/params";
 import { pageMeta } from "@/lib/seo";
 
@@ -56,10 +57,10 @@ export default async function AboutPage({ params }: LocaleParams) {
           <div className="relative h-full min-h-[28rem] overflow-hidden rounded-[2rem]">
             <Image src="/images/fleet/excavators-line.jpg" alt="" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover" />
             <div className="absolute inset-0 bg-linear-to-t from-ink/80 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 grid grid-cols-2 gap-px bg-white/10">
+            <div className="absolute inset-x-0 bottom-0 grid grid-cols-3 gap-px bg-white/10">
               {stats().map((s) => (
-                <div key={s.label.en} className="bg-ink/70 p-5 text-white backdrop-blur-md">
-                  <div className="text-3xl font-bold">
+                <div key={s.label.en} className="bg-ink/70 p-4 text-white backdrop-blur-md sm:p-5">
+                  <div className="text-2xl font-bold sm:text-3xl">
                     <Counter value={s.value} suffix={s.suffix} />
                   </div>
                   <div className="mt-1 text-sm text-white/70">{tr(s.label, locale)}</div>
@@ -114,44 +115,32 @@ export default async function AboutPage({ params }: LocaleParams) {
         </Stagger>
       </section>
 
-      <section className="bg-steel-50 py-24 lg:py-32">
-        <div className="container-x grid gap-14 lg:grid-cols-2">
-          <div>
-            <SectionHeading
-              eyebrow={ar ? "الهيكل الإداري" : "Organisation"}
-              title={ar ? "فرق متخصصة تحت إدارة واحدة" : "Specialist teams under one management"}
-              text={
-                ar
-                  ? "يقود الشركة مجلس إدارة ورئيس تنفيذي، تتبعهما إدارات متخصصة تغطي كل مراحل المشروع من التخطيط وحتى التسليم."
-                  : "A board and CEO lead specialist departments covering every project stage, from planning to handover."
-              }
-            />
-            <Stagger className="mt-10 grid gap-3 sm:grid-cols-2">
-              {about.departments.map((d) => (
-                <StaggerItem key={d.en} className="rounded-xl border border-steel-200 bg-surface px-4 py-3 font-medium text-steel-700">
-                  {tr(d, locale)}
-                </StaggerItem>
-              ))}
-            </Stagger>
-          </div>
-          <div>
+      <OrgChart locale={locale} />
+
+      <section className="py-24 lg:py-32">
+        <div className="container-x grid gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-5">
             <SectionHeading eyebrow={ar ? "شركاؤنا" : "Partners"} title={tr(ui.partnersTitle, locale)} text={tr(ui.partnersText, locale)} />
-            <Stagger className="mt-10 space-y-3">
+            <Reveal className="mt-8">
+              <LinkArrow href={`${href(locale, "projects")}#partners`}>{ar ? "استعرض مشاريع شركائنا" : "View our partners' projects"}</LinkArrow>
+            </Reveal>
+          </div>
+          <div className="lg:col-span-7">
+            <Stagger className="space-y-3">
               {partners.map((p, i) => (
-                <StaggerItem key={p.name} className="flex items-center gap-5 rounded-2xl bg-surface p-5 shadow-sm">
+                <StaggerItem key={p.name.en} className="flex items-center gap-5 rounded-2xl border border-steel-100 bg-surface p-5">
                   <span className="text-2xl font-bold text-brand-200" dir="ltr">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <div className="font-bold text-fg" dir="ltr">{p.name}</div>
+                    <div className="font-bold text-fg" dir={p.name.ar === p.name.en ? "ltr" : undefined}>
+                      {tr(p.name, locale)}
+                    </div>
                     <div className="mt-1 text-sm text-steel-500">{tr(p.activity, locale)}</div>
                   </div>
                 </StaggerItem>
               ))}
             </Stagger>
-            <Reveal className="mt-6">
-              <Eyebrow>{ar ? "رؤية المملكة 2030" : "Aligned with Saudi Vision 2030"}</Eyebrow>
-            </Reveal>
           </div>
         </div>
       </section>

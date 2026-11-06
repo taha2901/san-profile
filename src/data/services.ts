@@ -81,7 +81,7 @@ export const services: Service[] = [
       { ar: "صيانة وتأهيل الطرق القائمة", en: "Rehabilitation of existing roads" },
     ],
     image: "/images/gallery/mountain-road.jpg",
-    gallery: ["/images/projects/neom-paver.jpg", "/images/gallery/asphalt-paver.jpg", "/images/projects/aseer-asphalt-2.jpg"],
+    gallery: ["/images/gallery/asphalt-paver.jpg", "/images/projects/aseer-asphalt-2.jpg", "/images/gallery/dozer-slope.jpg"],
     categories: ["roads"],
   },
   {
@@ -154,7 +154,7 @@ export const services: Service[] = [
       { ar: "الترميم والتشطيبات", en: "Renovation and finishing" },
     ],
     image: "/images/projects/housing-rock-2.jpg",
-    gallery: ["/images/projects/housing-rock-3.jpg"],
+    gallery: ["/images/gallery/rock-cutting-2.jpg"],
     categories: ["land"],
   },
   {
@@ -201,7 +201,7 @@ export const services: Service[] = [
       { ar: "ردم الفجوات والتسوية", en: "Void filling and grading" },
       { ar: "أعمال الهدم", en: "Demolition works" },
     ],
-    image: "/images/projects/khamis-waste.jpg",
+    image: "/images/fleet/komatsu-dozers.jpg",
     gallery: ["/images/gallery/loader-fill.jpg"],
     categories: ["waste"],
   },

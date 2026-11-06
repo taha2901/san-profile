@@ -118,7 +118,7 @@ function StatsBar({ locale }: { locale: Locale }) {
   return (
     <section id="stats" className="relative z-10 bg-surface">
       <div className="container-x">
-        <div className="grid grid-cols-2 divide-steel-100 border-b border-steel-100 lg:grid-cols-4 lg:divide-x rtl:lg:divide-x-reverse">
+        <div className="grid grid-cols-1 divide-y divide-steel-100 border-b border-steel-100 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {stats().map((s, i) => (
             <Reveal key={s.label.en} delay={i * 0.08} className="px-2 py-10 text-center lg:py-14">
               <div className="text-4xl font-bold text-link sm:text-5xl">
@@ -279,7 +279,13 @@ function ClientsMarquee({ locale }: { locale: Locale }) {
                   dir={locale === "ar" ? "rtl" : "ltr"}
                   className="flex shrink-0 items-center gap-3 rounded-2xl border border-steel-100 bg-surface px-6 py-4 shadow-sm"
                 >
-                  <span className="size-2 rounded-full bg-brand-500" />
+                  {c.logo ? (
+                    <span className="inline-flex h-11 w-16 shrink-0 items-center justify-center rounded-lg bg-white p-1">
+                      <Image src={c.logo} alt="" width={128} height={64} className="max-h-full w-auto object-contain" />
+                    </span>
+                  ) : (
+                    <span className="size-2 rounded-full bg-brand-500" />
+                  )}
                   <span className="text-lg font-semibold whitespace-nowrap text-steel-700">{tr(c.name, locale)}</span>
                 </div>
               ))}

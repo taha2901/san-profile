@@ -1,10 +1,10 @@
 import { Cog, Gauge, Truck, Wrench } from "lucide-react";
 import { Gallery } from "@/components/Gallery";
 import { Counter, Reveal, Stagger, StaggerItem } from "@/components/motion";
-import { CtaBand, PageHero, SectionHeading } from "@/components/sections";
+import { CtaBand, LinkArrow, PageHero, SectionHeading } from "@/components/sections";
 import { fleet, fleetExtras, fleetGallery, fleetTotal } from "@/data/fleet";
 import { ui } from "@/data/ui";
-import { tr } from "@/lib/i18n";
+import { href, tr } from "@/lib/i18n";
 import { resolveLocale, type LocaleParams } from "@/lib/params";
 import { pageMeta } from "@/lib/seo";
 
@@ -86,7 +86,11 @@ export default async function FleetPage({ params }: LocaleParams) {
       </section>
 
       <section className="container-x py-24 lg:py-28">
-        <SectionHeading eyebrow={tr(ui.gallery, locale)} title={ar ? "معداتنا في المواقع" : "Our machines on site"} />
+        <SectionHeading
+          eyebrow={tr(ui.gallery, locale)}
+          title={ar ? "معداتنا في المواقع" : "Our machines on site"}
+          action={<LinkArrow href={href(locale, "gallery")}>{ar ? "معرض الصور الكامل" : "Full photo gallery"}</LinkArrow>}
+        />
         <Reveal className="mt-12">
           <Gallery images={fleetGallery.map((src) => ({ src, alt: tr(ui.fleetEyebrow, locale) }))} className="grid grid-cols-2 gap-4 lg:grid-cols-4" />
         </Reveal>

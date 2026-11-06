@@ -22,8 +22,8 @@ export const company = {
   website: "https://san-united.com",
 
   address: {
-    ar: "3774 شارع القلع، حي العوالي، مكة المكرمة 24372، المملكة العربية السعودية",
-    en: "3774 Al Qala St., Al Awali District, Makkah 24372, Saudi Arabia",
+    ar: "سنتر العوالي، 3774 شارع القلع، حي العوالي، مكة المكرمة 24372، المملكة العربية السعودية",
+    en: "Al Awali Center, 3774 Al Qala St., Al Awali District, Makkah 24372, Saudi Arabia",
   } satisfies L,
   city: { ar: "مكة المكرمة، المملكة العربية السعودية", en: "Makkah, Saudi Arabia" } satisfies L,
   mapQuery: "Al Awali, Makkah, Saudi Arabia",
@@ -42,17 +42,13 @@ export const company = {
   } satisfies L,
 };
 
-export function yearsOfExperience(now = new Date()): number {
-  return now.getFullYear() - company.foundedYear;
-}
-
 export type Stat = { value: number; suffix: string; label: L };
 
+/** The three figures exactly as stated in the company profile (p.2 "نبذة عن شركة سان المتحدة"). */
 export function stats(): Stat[] {
   return [
-    { value: yearsOfExperience(), suffix: "+", label: { ar: "سنوات من الخبرة", en: "Years of Experience" } },
-    { value: 125, suffix: "+", label: { ar: "مشروع منجز وجارٍ", en: "Projects Delivered" } },
-    { value: 1700, suffix: "+", label: { ar: "من القوى العاملة", en: "Workforce" } },
-    { value: 290, suffix: "+", label: { ar: "معدة وآلية مملوكة", en: "Owned Machines & Vehicles" } },
+    { value: 6, suffix: "+", label: { ar: "سنوات الخبرة", en: "Years of Experience" } },
+    { value: 125, suffix: "+", label: { ar: "مشروع قامت به الشركة", en: "Projects Undertaken" } },
+    { value: 1721, suffix: "+", label: { ar: "موظف في القوى العاملة", en: "Workforce" } },
   ];
 }

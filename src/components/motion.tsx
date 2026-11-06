@@ -64,6 +64,23 @@ export function StaggerItem({ children, className }: { children: ReactNode; clas
   );
 }
 
+/** Connector line that "draws" itself when scrolled into view (used by the org chart). */
+export function GrowLine({ axis = "y", className = "", delay = 0 }: { axis?: "x" | "y"; className?: string; delay?: number }) {
+  const reduce = useReducedMotion();
+  const prop = axis === "y" ? "scaleY" : "scaleX";
+  return (
+    <motion.span
+      aria-hidden
+      className={`block bg-brand-200 dark:bg-brand-700 ${className}`}
+      style={{ transformOrigin: axis === "y" ? "top" : "center" }}
+      initial={reduce ? false : { [prop]: 0 }}
+      whileInView={{ [prop]: 1 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.6, delay, ease }}
+    />
+  );
+}
+
 export function Counter({ value, suffix = "", className }: { value: number; suffix?: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
