@@ -23,7 +23,7 @@ export function ProjectsExplorer({ projects, locale }: { projects: Project[]; lo
       key={key}
       type="button"
       onClick={() => setActive(key)}
-      className={`relative rounded-full px-5 py-2.5 text-sm font-semibold transition-colors ${
+      className={`relative shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors xl:px-5 ${
         active === key ? "text-white" : "text-steel-600 hover:text-fg"
       }`}
     >
@@ -37,7 +37,7 @@ export function ProjectsExplorer({ projects, locale }: { projects: Project[]; lo
 
   return (
     <div>
-      <div className="isolate flex flex-wrap gap-2 rounded-full border border-steel-100 bg-steel-50 p-1.5 lg:inline-flex">
+      <div className="isolate mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full border border-steel-100 bg-steel-50 p-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {chip("all", locale === "ar" ? "الكل" : "All", projects.length)}
         {keys.map((k) => chip(k, tr(categories[k], locale), counts[k] ?? 0))}
       </div>
