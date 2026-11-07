@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Globe, Menu, Phone, X } from "lucide-react";
+import { ArrowUpRight, Globe, Menu, Phone, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -98,12 +98,13 @@ export function Header({ locale }: { locale: Locale }) {
             <Globe className="size-4" />
             {tr(ui.switchLang, locale)}
           </Link>
-          <Link
-            href={href(locale, "contact")}
-            className="hidden items-center gap-2 rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-600 md:inline-flex"
-          >
-            {tr(ui.contactUs, locale)}
-            <ArrowForward className="size-4" />
+          <Link href={href(locale, "contact")} className="group ms-1 hidden items-center md:inline-flex">
+            <span className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/25 transition-colors group-hover:bg-brand-600">
+              {tr(ui.startProject, locale)}
+            </span>
+            <span className="-ms-0.5 flex size-10 items-center justify-center rounded-full bg-brand-500 text-white shadow-lg shadow-brand-500/25 transition-colors group-hover:bg-brand-600">
+              <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45 rtl:-scale-x-100 rtl:group-hover:-rotate-45" />
+            </span>
           </Link>
           <button
             type="button"
@@ -152,7 +153,8 @@ export function Header({ locale }: { locale: Locale }) {
                   href={href(locale, "contact")}
                   className="flex items-center justify-center gap-2 rounded-full bg-brand-500 py-4 font-semibold text-white"
                 >
-                  {tr(ui.contactUs, locale)}
+                  {tr(ui.startProject, locale)}
+                  <ArrowUpRight className="size-4 rtl:-scale-x-100" />
                 </Link>
                 <a
                   href={`tel:${company.phone}`}

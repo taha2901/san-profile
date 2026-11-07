@@ -16,6 +16,7 @@ export const nav: NavItem[] = [
 export const ui = {
   contactUs: { ar: "تواصل معنا", en: "Contact Us" },
   requestQuote: { ar: "اطلب عرض سعر", en: "Request a Quote" },
+  startProject: { ar: "ابدأ مشروعك", en: "Start a project" },
   viewProjects: { ar: "استعرض مشاريعنا", en: "Explore Our Projects" },
   viewAll: { ar: "عرض الكل", en: "View all" },
   learnMore: { ar: "اعرف المزيد", en: "Learn more" },
