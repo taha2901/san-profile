@@ -1,4 +1,4 @@
-import { ArrowUpRight, Award, BadgeCheck, CheckCircle2, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectCard, ServiceCard } from "@/components/cards";
@@ -39,58 +39,48 @@ export default async function HomePage({ params }: LocaleParams) {
 }
 
 function Hero({ locale }: { locale: Locale }) {
-  const trust = [
-    { icon: Award, label: ui.trustClass },
-    { icon: BadgeCheck, label: ui.trustIso },
-    { icon: ShieldCheck, label: ui.trustSca },
-  ];
   return (
     <section className="bg-surface p-2 sm:p-3">
       {/* Dark rounded frame — the transparent header sits on top of it */}
-      <div className="relative isolate overflow-hidden rounded-[1.75rem] bg-ink pt-28 pb-6 text-white sm:rounded-[2rem] lg:pb-8">
-        <div className="absolute -top-48 start-1/4 -z-10 size-[40rem] rounded-full bg-brand-500/15 blur-3xl" />
-
+      <div className="relative overflow-hidden rounded-[1.75rem] bg-ink pt-28 pb-3 text-white sm:rounded-[2rem] sm:pb-5 lg:pt-32">
         <div className="container-x">
           <div className="relative">
             {/*
-              Text block. On large screens it sits on the image's top-start corner in two
-              "tiers" (wide title, narrower intro), and .notch corners make the image curve around it.
+              Text block. On large screens it sits on the image's top-start corner in two tiers
+              (title, then a narrower row of buttons) and .notch corners make the image curve around it.
             */}
             <div className="relative z-10 flex flex-col items-start lg:absolute lg:start-0 lg:top-0">
-              <div className="relative lg:w-[38rem] lg:rounded-ee-[2rem] lg:bg-ink lg:pe-10 lg:pb-7 xl:w-[44rem]">
+              <div className="relative lg:max-w-[34rem] lg:rounded-ee-[2rem] lg:bg-ink lg:pe-10 lg:pb-6 xl:max-w-[40rem]">
                 <span className="notch start-full top-0 hidden lg:block" />
-                <Reveal y={16}>
-                  <span className="inline-flex items-center gap-2.5 text-sm font-medium text-white/80">
-                    <span className="size-2 rounded-full bg-brand-400 shadow-[0_0_0_4px_rgb(79_132_201/0.25)]" />
+                <Reveal y={12}>
+                  <span className="inline-flex items-center gap-2 text-sm text-white/70">
+                    <span className="size-1.5 rounded-full bg-brand-400" />
                     {tr(ui.heroEyebrow, locale)}
                   </span>
                 </Reveal>
-                <Reveal delay={0.1}>
-                  <h1 className="mt-5 text-[2.5rem] leading-[1.15] font-semibold tracking-tight text-balance sm:text-6xl lg:text-[3.6rem] xl:text-[4.25rem]">
-                    {tr(ui.heroTitle1, locale)} <span className="text-brand-200">{tr(ui.heroTitle2, locale)}</span>
+                <Reveal delay={0.08} y={20}>
+                  <h1 className="mt-4 text-4xl leading-[1.2] font-semibold tracking-tight text-balance sm:text-5xl xl:text-[3.5rem]">
+                    {tr(ui.heroTitle1, locale)} {tr(ui.heroTitle2, locale)}
                   </h1>
                 </Reveal>
               </div>
 
-              <div className="relative lg:w-[30rem] lg:rounded-ee-[2rem] lg:bg-ink lg:pe-10 lg:pb-8 xl:w-[32rem]">
+              <div className="relative lg:rounded-ee-[2rem] lg:bg-ink lg:pe-8 lg:pb-7">
                 <span className="notch start-full top-0 hidden lg:block" />
                 <span className="notch start-0 top-full hidden lg:block" />
-                <Reveal delay={0.2}>
-                  <p className="mt-5 max-w-md leading-relaxed text-white/65 sm:text-lg lg:mt-0">{tr(ui.heroText, locale)}</p>
-                </Reveal>
-                <Reveal delay={0.3}>
-                  <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-4">
+                <Reveal delay={0.16} y={16}>
+                  <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 lg:mt-1">
                     <Link href={href(locale, "projects")} className="group inline-flex items-center">
-                      <span className="rounded-full bg-white/10 px-6 py-3.5 text-sm font-semibold ring-1 ring-white/10 backdrop-blur transition-colors group-hover:bg-white group-hover:text-ink">
+                      <span className="rounded-full bg-white/[0.08] px-5 py-3 text-sm font-medium transition-colors group-hover:bg-white group-hover:text-ink">
                         {tr(ui.viewProjects, locale)}
                       </span>
-                      <span className="-ms-0.5 flex size-12 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/10 backdrop-blur transition-colors group-hover:bg-white group-hover:text-ink">
+                      <span className="-ms-0.5 flex size-11 items-center justify-center rounded-full bg-white/[0.08] transition-colors group-hover:bg-white group-hover:text-ink">
                         <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45 rtl:-scale-x-100 rtl:group-hover:-rotate-45" />
                       </span>
                     </Link>
                     <Link
                       href={href(locale, "contact")}
-                      className="group inline-flex items-center gap-1.5 text-sm font-semibold text-white/85 transition-colors hover:text-white"
+                      className="group inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-colors hover:text-white"
                     >
                       {tr(ui.requestQuote, locale)}
                       <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
@@ -101,41 +91,16 @@ function Hero({ locale }: { locale: Locale }) {
             </div>
 
             {/* Image card */}
-            <div className="relative mt-10 h-[24rem] overflow-hidden rounded-[2rem] sm:h-[30rem] lg:mt-0 lg:h-[clamp(38rem,calc(100svh-9.5rem),50rem)]">
+            <div className="relative mt-10 h-[22rem] overflow-hidden rounded-[2rem] sm:h-[28rem] lg:mt-0 lg:h-[clamp(34rem,calc(100svh-10rem),46rem)]">
               <Image
-                src="/images/fleet/excavators-row.jpg"
+                src="/images/fleet/komatsu-dozers.jpg"
                 alt=""
                 fill
                 priority
                 sizes="(min-width: 80rem) 80rem, 100vw"
-                className="animate-kenburns object-cover"
+                className="animate-kenburns object-cover object-[center_30%]"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-ink/75 via-ink/0 to-ink/10" />
-
-              {/* Floating fleet stat */}
-              <Reveal delay={0.5} className="absolute end-4 top-4 sm:end-6 sm:top-6">
-                <div className="rounded-2xl border border-white/20 bg-ink/35 px-5 py-4 backdrop-blur-md">
-                  <div className="text-3xl font-bold sm:text-4xl">
-                    <Counter value={fleetTotal} suffix="+" />
-                  </div>
-                  <div className="mt-1 text-xs font-medium text-white/75 sm:text-sm">{tr({ ar: "معدة مملوكة", en: "Owned machines" }, locale)}</div>
-                </div>
-              </Reveal>
-
-              {/* Trust chips */}
-              <Reveal delay={0.6} className="absolute inset-x-4 bottom-4 sm:inset-x-6 sm:bottom-6">
-                <div className="flex flex-wrap gap-2 lg:justify-end">
-                  {trust.map(({ icon: Icon, label }) => (
-                    <span
-                      key={label.en}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-ink/45 px-3.5 py-2 text-xs font-medium text-white/90 backdrop-blur-md sm:text-sm"
-                    >
-                      <Icon className="size-4 shrink-0 text-brand-300" />
-                      {tr(label, locale)}
-                    </span>
-                  ))}
-                </div>
-              </Reveal>
+              <div className="absolute inset-0 bg-ink/10" />
             </div>
           </div>
         </div>
