@@ -1,7 +1,6 @@
-import { ClientCard } from "@/components/cards";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion";
-import { CtaBand, Eyebrow, PageHero } from "@/components/sections";
-import { clients, sectors, type Sector } from "@/data/clients";
+import { ClientsShowcase } from "@/components/ClientsShowcase";
+import { CtaBand, PageHero } from "@/components/sections";
+import { clients, type Sector } from "@/data/clients";
 import { projects } from "@/data/projects";
 import { ui } from "@/data/ui";
 import { tr } from "@/lib/i18n";
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: LocaleParams) {
 export default async function ClientsPage({ params }: LocaleParams) {
   const locale = await resolveLocale(params);
   const order: Sector[] = ["giga", "government", "utilities", "private"];
-  const projectCount = (key: string) => projects.filter((p) => p.client === key).length;
+  const withCounts = clients.map((c) => ({ ...c, projects: projects.filter((p) => p.client === c.key).length }));
 
   return (
     <>
@@ -33,29 +32,7 @@ export default async function ClientsPage({ params }: LocaleParams) {
         crumbs={[{ label: tr({ ar: "عملاؤنا", en: "Clients" }, locale) }]}
       />
 
-      <section className="container-x space-y-16 py-24 lg:py-28">
-        {order.map((sector) => {
-          const list = clients.filter((c) => c.sector === sector);
-          if (!list.length) return null;
-          return (
-            <div key={sector}>
-              <Reveal>
-                <Eyebrow>{tr(sectors[sector], locale)}</Eyebrow>
-              </Reveal>
-              <Stagger className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {list.map((c) => {
-                  const n = projectCount(c.key);
-                  return (
-                    <StaggerItem key={c.key}>
-                      <ClientCard client={c} locale={locale} meta={n > 0 ? `${n} ${tr(ui.projectsCount, locale)}` : undefined} />
-                    </StaggerItem>
-                  );
-                })}
-              </Stagger>
-            </div>
-          );
-        })}
-      </section>
+      <ClientsShowcase clients={withCounts} order={order} locale={locale} />
 
       <CtaBand locale={locale} />
     </>
