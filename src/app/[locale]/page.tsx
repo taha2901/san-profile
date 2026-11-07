@@ -1,7 +1,8 @@
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { Award, BadgeCheck, CheckCircle2, ChevronDown, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ProjectCard, ServiceCard } from "@/components/cards";
+import { ArrowForward } from "@/components/icons";
 import { Counter, Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { CtaBand, Eyebrow, LinkArrow, SectionHeading } from "@/components/sections";
 import { about } from "@/data/about";
@@ -39,72 +40,76 @@ export default async function HomePage({ params }: LocaleParams) {
 }
 
 function Hero({ locale }: { locale: Locale }) {
+  const trust = [
+    { icon: Award, label: ui.trustClass },
+    { icon: BadgeCheck, label: ui.trustIso },
+    { icon: ShieldCheck, label: ui.trustSca },
+  ];
   return (
-    <section className="bg-surface p-2 sm:p-3">
-      {/* Dark rounded frame — the transparent header sits on top of it */}
-      <div className="relative overflow-hidden rounded-[1.75rem] bg-ink pt-28 pb-3 text-white sm:rounded-[2rem] sm:pb-5 lg:pt-32">
-        <div className="container-x">
-          <div className="relative">
-            {/*
-              Text block. On large screens it sits on the image's top-start corner in two tiers
-              (title, then a narrower row of buttons) and .notch corners make the image curve around it.
-            */}
-            <div className="relative z-10 flex flex-col items-start lg:absolute lg:start-0 lg:top-0">
-              <div className="relative lg:max-w-[34rem] lg:rounded-ee-[2rem] lg:bg-ink lg:pe-10 lg:pb-6 xl:max-w-[40rem]">
-                <span className="notch start-full top-0 hidden lg:block" />
-                <Reveal y={12}>
-                  <span className="inline-flex items-center gap-2 text-sm text-white/70">
-                    <span className="size-1.5 rounded-full bg-brand-400" />
-                    {tr(ui.heroEyebrow, locale)}
-                  </span>
-                </Reveal>
-                <Reveal delay={0.08} y={20}>
-                  <h1 className="mt-4 text-4xl leading-[1.2] font-semibold tracking-tight text-balance sm:text-5xl xl:text-[3.5rem]">
-                    {tr(ui.heroTitle1, locale)} {tr(ui.heroTitle2, locale)}
-                  </h1>
-                </Reveal>
-              </div>
+    <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-ink text-white">
+      <Image src="/images/fleet/excavators-row.jpg" alt="" fill priority sizes="100vw" className="animate-kenburns -z-30 object-cover" />
+      <div className="absolute inset-0 -z-20 bg-linear-to-t from-ink via-ink/70 to-ink/40" />
+      <div className="absolute inset-0 -z-20 bg-linear-to-l from-ink/80 via-ink/30 to-transparent ltr:bg-linear-to-r" />
+      <div className="bg-grid absolute inset-0 -z-10 opacity-50 [mask-image:linear-gradient(to_top,black,transparent_70%)]" />
 
-              <div className="relative lg:rounded-ee-[2rem] lg:bg-ink lg:pe-8 lg:pb-7">
-                <span className="notch start-full top-0 hidden lg:block" />
-                <span className="notch start-0 top-full hidden lg:block" />
-                <Reveal delay={0.16} y={16}>
-                  <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 lg:mt-1">
-                    <Link href={href(locale, "projects")} className="group inline-flex items-center">
-                      <span className="rounded-full bg-white/[0.08] px-5 py-3 text-sm font-medium transition-colors group-hover:bg-white group-hover:text-ink">
-                        {tr(ui.viewProjects, locale)}
-                      </span>
-                      <span className="-ms-0.5 flex size-11 items-center justify-center rounded-full bg-white/[0.08] transition-colors group-hover:bg-white group-hover:text-ink">
-                        <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45 rtl:-scale-x-100 rtl:group-hover:-rotate-45" />
-                      </span>
-                    </Link>
-                    <Link
-                      href={href(locale, "contact")}
-                      className="group inline-flex items-center gap-1.5 text-sm font-medium text-white/80 transition-colors hover:text-white"
-                    >
-                      {tr(ui.requestQuote, locale)}
-                      <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
-                    </Link>
-                  </div>
-                </Reveal>
-              </div>
+      <div className="container-x pt-40 pb-16 lg:pb-24">
+        <Stagger className="max-w-4xl" gap={0.12}>
+          <StaggerItem>
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium backdrop-blur-md">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-brand-400 opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-brand-400" />
+              </span>
+              {tr(ui.heroEyebrow, locale)}
+            </span>
+          </StaggerItem>
+          <StaggerItem>
+            <h1 className="mt-7 text-[2.6rem] leading-[1.12] font-bold text-balance sm:text-6xl lg:text-7xl">
+              {tr(ui.heroTitle1, locale)}
+              <span className="block bg-linear-to-l from-brand-200 via-white to-white bg-clip-text text-transparent ltr:bg-linear-to-r">
+                {tr(ui.heroTitle2, locale)}
+              </span>
+            </h1>
+          </StaggerItem>
+          <StaggerItem>
+            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/75 sm:text-xl">{tr(ui.heroText, locale)}</p>
+          </StaggerItem>
+          <StaggerItem>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href={href(locale, "projects")}
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand-500 px-8 py-4 font-semibold text-white shadow-xl shadow-brand-500/30 transition hover:bg-brand-400"
+              >
+                {tr(ui.viewProjects, locale)}
+                <ArrowForward className="size-4 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
+              </Link>
+              <Link
+                href={href(locale, "contact")}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 bg-white/5 px-8 py-4 font-semibold text-white backdrop-blur-md transition hover:bg-white/15"
+              >
+                {tr(ui.requestQuote, locale)}
+              </Link>
             </div>
+          </StaggerItem>
+        </Stagger>
 
-            {/* Image card */}
-            <div className="relative mt-10 h-[22rem] overflow-hidden rounded-[2rem] sm:h-[28rem] lg:mt-0 lg:h-[clamp(34rem,calc(100svh-10rem),46rem)]">
-              <Image
-                src="/images/fleet/komatsu-dozers.jpg"
-                alt=""
-                fill
-                priority
-                sizes="(min-width: 80rem) 80rem, 100vw"
-                className="animate-kenburns object-cover object-[center_30%]"
-              />
-              <div className="absolute inset-0 bg-ink/10" />
+        <Reveal delay={0.7} className="mt-16 grid gap-4 border-t border-white/15 pt-8 sm:grid-cols-3 lg:mt-24">
+          {trust.map(({ icon: Icon, label }) => (
+            <div key={label.en} className="flex items-center gap-3 text-sm font-medium text-white/80">
+              <Icon className="size-5 shrink-0 text-brand-300" />
+              {tr(label, locale)}
             </div>
-          </div>
-        </div>
+          ))}
+        </Reveal>
       </div>
+
+      <a
+        href="#stats"
+        className="absolute bottom-6 start-1/2 hidden -translate-x-1/2 flex-col items-center gap-1 text-xs text-white/50 transition hover:text-white lg:flex rtl:translate-x-1/2"
+      >
+        {tr(ui.scroll, locale)}
+        <ChevronDown className="size-4 animate-bounce" />
+      </a>
     </section>
   );
 }

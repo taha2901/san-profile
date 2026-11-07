@@ -135,19 +135,3 @@ html[lang="en"] body {
   html { scroll-behavior: auto; }
   .animate-marquee, .animate-kenburns { animation: none; }
 }
-/*
- * Inverted ("notched") corner — used where the home-hero text block cuts into the image card.
- * Fills an r×r square with the frame colour except a quarter circle, so the image
- * appears to curve around the block. Mirrored for RTL.
- */
-.notch {
-  --r: 2rem;
-  position: absolute;
-  width: var(--r);
-  height: var(--r);
-  pointer-events: none;
-  background: radial-gradient(circle at 100% 100%, transparent calc(var(--r) - 0.5px), var(--color-ink) var(--r));
-}
-[dir="rtl"] .notch {
-  background: radial-gradient(circle at 0% 100%, transparent calc(var(--r) - 0.5px), var(--color-ink) var(--r));
-}
