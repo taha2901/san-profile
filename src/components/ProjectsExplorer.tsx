@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { categories, type CategoryKey, type Project } from "@/data/projects";
 import { tr, type Locale } from "@/lib/i18n";
 import { ProjectCard } from "./cards";
+import { ScrollTabs } from "./ScrollTabs";
 
 export function ProjectsExplorer({ projects, locale }: { projects: Project[]; locale: Locale }) {
   const [active, setActive] = useState<CategoryKey | "all">("all");
@@ -22,6 +23,8 @@ export function ProjectsExplorer({ projects, locale }: { projects: Project[]; lo
     <button
       key={key}
       type="button"
+      role="tab"
+      aria-selected={active === key}
       onClick={() => setActive(key)}
       className={`relative shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition-colors xl:px-5 ${
         active === key ? "text-white" : "text-steel-600 hover:text-fg"
@@ -37,10 +40,10 @@ export function ProjectsExplorer({ projects, locale }: { projects: Project[]; lo
 
   return (
     <div>
-      <div className="isolate mx-auto flex w-fit max-w-full gap-1 overflow-x-auto rounded-full border border-steel-100 bg-steel-50 p-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <ScrollTabs activeKey={active} label={locale === "ar" ? "تصفية حسب التصنيف" : "Filter by category"}>
         {chip("all", locale === "ar" ? "الكل" : "All", projects.length)}
         {keys.map((k) => chip(k, tr(categories[k], locale), counts[k] ?? 0))}
-      </div>
+      </ScrollTabs>
 
       <motion.div layout className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <AnimatePresence mode="popLayout">

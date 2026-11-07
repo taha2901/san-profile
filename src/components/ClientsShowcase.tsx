@@ -9,6 +9,7 @@ import { sectors, type Client, type Sector } from "@/data/clients";
 import { href, tr, type Locale } from "@/lib/i18n";
 import { ArrowForward } from "./icons";
 import { Counter, Reveal } from "./motion";
+import { ScrollTabs } from "./ScrollTabs";
 
 export type ShowcaseClient = Client & { projects: number };
 
@@ -128,13 +129,9 @@ export function ClientsShowcase({ clients, order, locale }: { clients: ShowcaseC
         )}
 
         {/* Sector filter */}
-        <div className="mt-20 flex justify-center">
+        <div className="mt-20">
           <LayoutGroup id="client-tabs">
-            <div
-              role="tablist"
-              aria-label={tr(t.filterLabel, locale)}
-              className="flex max-w-full gap-1 overflow-x-auto rounded-full border border-steel-100 bg-steel-50 p-1.5 [scrollbar-width:none]"
-            >
+            <ScrollTabs activeKey={active} label={tr(t.filterLabel, locale)}>
               {tabs.map(({ key, label, count, Icon }) => {
                 const on = active === key;
                 return (
@@ -166,7 +163,7 @@ export function ClientsShowcase({ clients, order, locale }: { clients: ShowcaseC
                   </button>
                 );
               })}
-            </div>
+            </ScrollTabs>
           </LayoutGroup>
         </div>
 
